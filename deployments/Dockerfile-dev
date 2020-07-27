@@ -1,0 +1,17 @@
+FROM golang:1.13
+
+# install fresh (golang rebuilder on file change) and install gotest
+RUN go get -u github.com/sc7639/fresh \
+    github.com/rakyll/gotest \
+    github.com/golang/protobuf/proto \
+    google.golang.org/grpc
+
+RUN mkdir -p /app/ /app/tmp
+
+ENV Environment development
+
+VOLUME  /app
+WORKDIR /app
+EXPOSE 443
+
+CMD ["fresh", "-c", "./config/fresh.conf"]
